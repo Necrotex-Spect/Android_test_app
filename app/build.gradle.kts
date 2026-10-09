@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.vk_homework_3"
+    namespace = "com.example.my_test_app"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.example.vk_homework_3"
+        applicationId = "com.example.my_test_app"
         minSdk = 24
         targetSdk = 37
         versionCode = 1

@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VK_homework_3"
+rootProject.name = "Android_test_app"
 include(":app")
  

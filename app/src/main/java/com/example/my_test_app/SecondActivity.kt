@@ -1,4 +1,4 @@
-package com.example.vk_homework_3
+package com.example.my_test_app
 
 import android.os.Bundle
 import android.widget.TextView
