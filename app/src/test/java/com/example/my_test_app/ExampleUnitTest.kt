@@ -1,4 +1,4 @@
-package com.example.my_test_app
+package com.example.vk_homework_3
 
 import org.junit.Test
 
