@@ -1,4 +1,5 @@
 [versions]
+navigationCompose = "2.7.7"
 agp = "9.4.1"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
@@ -12,6 +13,7 @@ constraintlayout = "2.1.4"
 composeBom = "2024.09.03"
 
 [libraries]
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
 compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }

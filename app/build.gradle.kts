@@ -37,7 +37,8 @@ android {
 }
 
 dependencies {
-    // Compose
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation(libs.navigation.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
