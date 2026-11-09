@@ -1,4 +1,5 @@
 package com.example.my_test_app.presentation
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -10,7 +11,6 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import com.example.my_test_app.domain.AppInfo
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,6 +20,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import com.example.my_test_app.domain.AppInfo
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -56,10 +58,9 @@ fun AppDetailScreen(appInfo: AppInfo?, navController: NavController) {
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 16.dp)
         ) {
-            // Шапка (Иконка, название, категория, размер)
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Image(
-                    painter = painterResource(id = appInfo.iconResId),
+                AsyncImage(
+                    model = appInfo.iconUrl,
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
@@ -93,7 +94,6 @@ fun AppDetailScreen(appInfo: AppInfo?, navController: NavController) {
 
             Spacer(Modifier.height(24.dp))
 
-            // Кнопка "Установить"
             Button(
                 onClick = { /* Логика установки */ },
                 shape = RoundedCornerShape(8.dp),
@@ -104,7 +104,6 @@ fun AppDetailScreen(appInfo: AppInfo?, navController: NavController) {
 
             Spacer(Modifier.height(24.dp))
 
-            // Скриншоты (заглушка, так как в AppInfo нет картинок)
             Text(text = "Скриншоты", fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -121,7 +120,6 @@ fun AppDetailScreen(appInfo: AppInfo?, navController: NavController) {
 
             Spacer(Modifier.height(24.dp))
 
-            // Описание
             Text(text = "Описание", fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(8.dp))
             Text(text = appInfo.description, fontSize = 14.sp)

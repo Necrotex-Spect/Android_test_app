@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -39,10 +39,6 @@ android {
 }
 
 dependencies {
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
-    implementation("io.coil-kt:coil-compose:2.6.0")
-    implementation(libs.navigation.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
@@ -50,18 +46,24 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.material.icons.extended)
     implementation(libs.androidx.activity.compose)
+
+    implementation(libs.navigation.compose)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    // База
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.gson)
+    implementation(libs.okhttp.logging)
+    implementation(libs.gson)
+    implementation(libs.coil.compose)
+
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
 
-    // Тесты
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

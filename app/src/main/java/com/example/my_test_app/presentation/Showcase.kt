@@ -1,6 +1,5 @@
 package com.example.my_test_app.presentation
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,11 +16,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.my_test_app.domain.AppInfo
 
 @Composable
@@ -45,7 +44,7 @@ fun ShowcaseSection(
             pageSpacing = 8.dp
         ) { page ->
             val startIndex = page * 3
-            val pageApps = showcaseApps.subList(startIndex, startIndex + 3)
+            val pageApps = showcaseApps.subList(startIndex, (startIndex + 3).coerceAtMost(showcaseApps.size))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -76,8 +75,8 @@ fun CompactAppItem(app: AppInfo) {
             modifier = Modifier.padding(8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = app.iconResId),
+            AsyncImage(
+                model = app.iconUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .size(48.dp)

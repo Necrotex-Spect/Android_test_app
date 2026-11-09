@@ -3,7 +3,6 @@ package com.example.my_test_app.presentation
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +32,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import coil.compose.AsyncImage
 import com.example.my_test_app.domain.AppInfo
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -62,7 +61,7 @@ fun AppNavigation() {
             arguments = listOf(navArgument("appIndex") { type = NavType.IntType })
         ) { backStackEntry ->
             val index = backStackEntry.arguments?.getInt("appIndex") ?: 0
-            val viewModel: AppListViewModel = hiltViewModel() // Используем Hilt
+            val viewModel: AppListViewModel = hiltViewModel()
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val allApps = uiState.apps + uiState.showcaseApps
             val app = allApps.getOrNull(index)
@@ -76,7 +75,7 @@ fun AppNavigation() {
 @Composable
 fun AppListScreen(
     navController: NavController,
-    viewModel: AppListViewModel = hiltViewModel() // Используем Hilt
+    viewModel: AppListViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -109,27 +108,33 @@ fun AppListScreen(
             )
         }
     ) { innerPadding ->
-        LazyColumn(
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
-            contentPadding = PaddingValues(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-            itemsIndexed(uiState.apps) { index, app ->
-                Box(modifier = Modifier.clickable {
-                    navController.navigate("appDetail/$index")
-                }) {
-                    AppListItem(app)
-                }
+        if (uiState.isLoading) {
+            Box(modifier = Modifier.fillMaxSize().padding(innerPadding), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator()
             }
-
-            item {
-                ShowcaseSection(
-                    showcaseApps = uiState.showcaseApps,
-                    onAppClick = { app: AppInfo ->
-                        val globalIndex = allApps.indexOf(app)
-                        navController.navigate("appDetail/$globalIndex")
+        } else {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize().padding(innerPadding),
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                itemsIndexed(uiState.apps) { index, app ->
+                    Box(modifier = Modifier.clickable {
+                        navController.navigate("appDetail/$index")
+                    }) {
+                        AppListItem(app)
                     }
-                )
+                }
+
+                item {
+                    ShowcaseSection(
+                        showcaseApps = uiState.showcaseApps,
+                        onAppClick = { app: AppInfo ->
+                            val globalIndex = allApps.indexOf(app)
+                            navController.navigate("appDetail/$globalIndex")
+                        }
+                    )
+                }
             }
         }
     }
@@ -146,8 +151,8 @@ fun AppListItem(app: AppInfo) {
             modifier = Modifier.padding(16.dp).fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
-                painter = painterResource(id = app.iconResId),
+            AsyncImage(
+                model = app.iconUrl,
                 contentDescription = "Иконка ${app.name}",
                 modifier = Modifier
                     .size(48.dp)
