@@ -122,7 +122,8 @@ fun AppListScreen(
                     Box(modifier = Modifier.clickable {
                         navController.navigate("appDetail/$index")
                     }) {
-                        AppListItem(app)
+                        // Передаем рейтинг в карточку
+                        AppListItem(app = app, rating = uiState.ratings[app.id])
                     }
                 }
 
@@ -141,7 +142,7 @@ fun AppListScreen(
 }
 
 @Composable
-fun AppListItem(app: AppInfo) {
+fun AppListItem(app: AppInfo, rating: Float? = null) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -164,7 +165,13 @@ fun AppListItem(app: AppInfo) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = app.name, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                 Text(text = app.description, fontSize = 14.sp, color = Color.Gray, modifier = Modifier.padding(vertical = 4.dp))
-                Text(text = "Категория: ${app.category}", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(text = "Категория: ${app.category}", fontSize = 12.sp, color = MaterialTheme.colorScheme.primary)
+                    if (rating != null) {
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(text = "★ $rating", color = Color(0xFFFFB300), fontSize = 12.sp)
+                    }
+                }
             }
         }
     }

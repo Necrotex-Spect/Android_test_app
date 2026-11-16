@@ -2,6 +2,7 @@ package com.example.my_test_app.data.api
 
 import com.example.my_test_app.data.dto.AppDetailsDto
 import com.example.my_test_app.data.dto.CatalogDto
+import kotlinx.coroutines.delay
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -11,4 +12,10 @@ interface AppApi {
 
     @GET("{id}")
     suspend fun getAppDetails(@Path("id") id: String): AppDetailsDto
+
+    // Эмуляция получения рейтинга
+    suspend fun getRating(id: String): Float {
+        delay(1500)
+        return (30..50).random() / 10f
+    }
 }
