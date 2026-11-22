@@ -18,8 +18,14 @@ retrofit = "2.11.0"
 gson = "2.11.0"
 okhttp = "4.12.0"
 coil = "2.6.0"
+junit4 = "4.13.2"
+mockk = "1.13.10"
+coroutinesTest = "1.8.1"
 
 [libraries]
+junit4 = { group = "junit", name = "junit", version.ref = "junit4" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }
